@@ -7,6 +7,7 @@ import {
   Grid,
   MenuItem,
   Snackbar,
+  Card
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { db } from "../Firebase/config.js"; // Ensure this path is correct
@@ -95,13 +96,12 @@ const PostJob = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
-  return (
-    <>
-      <div>
-        <Navbar />
-      </div>
-      <Container maxWidth="md" className="mt-10">
-        <Typography variant="h4" component="h1" gutterBottom>
+ return (
+  <>
+    <Navbar />
+    <Container maxWidth="md" className="mt-10">
+      <Card className="p-8 shadow-lg rounded-2xl">
+        <Typography variant="h4" component="h1" gutterBottom className="mb-6">
           Post a New Job
         </Typography>
         <StyledForm onSubmit={handleSubmit}>
@@ -114,6 +114,7 @@ const PostJob = () => {
                 value={jobData.title}
                 onChange={handleChange}
                 required
+                helperText="Enter the title of the job role"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -124,6 +125,7 @@ const PostJob = () => {
                 value={jobData.company}
                 onChange={handleChange}
                 required
+                helperText="Enter the company name"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -134,6 +136,7 @@ const PostJob = () => {
                 value={jobData.location}
                 onChange={handleChange}
                 required
+                helperText="E.g., Mumbai, Remote"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -145,6 +148,7 @@ const PostJob = () => {
                 value={jobData.type}
                 onChange={handleChange}
                 required
+                helperText="Select full-time, part-time, etc."
               >
                 {jobTypes.map((option) => (
                   <MenuItem key={option} value={option}>
@@ -157,23 +161,26 @@ const PostJob = () => {
               <TextField
                 fullWidth
                 multiline
-                rows={4}
+                minRows={4}
+                maxRows={10}
                 label="Job Description"
                 name="description"
                 value={jobData.description}
                 onChange={handleChange}
                 required
+                helperText="Provide detailed information about the role"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 multiline
-                rows={4}
+                minRows={3}
                 label="Requirements"
                 name="requirements"
                 value={jobData.requirements}
                 onChange={handleChange}
+                helperText="List skills and qualifications"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -184,22 +191,30 @@ const PostJob = () => {
                 value={jobData.salary}
                 onChange={handleChange}
                 type="number"
+                helperText="Enter numeric salary (e.g., 50000)"
               />
             </Grid>
           </Grid>
-          <StyledButton type="submit" variant="contained" color="primary">
+          <StyledButton
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="mt-6 px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition"
+          >
             Post Job
           </StyledButton>
         </StyledForm>
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-          message={snackbar.message}
-        />
-      </Container>
-    </>
-  );
+      </Card>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message={snackbar.message}
+      />
+    </Container>
+  </>
+);
+
 };
 
 export default PostJob;
